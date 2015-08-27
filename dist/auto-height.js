@@ -30,9 +30,10 @@ angular.module('twygmbh.auto-height', []).directive('autoHeight', [
                     return results;
                 };
                 angular.element($window).bind('resize', function() {
-                    var additionalHeight, parentHeight;
+                    var additionalHeight, parentHeight, fallbackHeight;
                     additionalHeight = $attrs.additionalHeight || 0;
-                    parentHeight = $window.innerHeight - $element.parent()[0].getBoundingClientRect().top;
+                    fallbackHeight = $attrs.fallbackHeight || 0;
+                    parentHeight = $window.innerHeight - ($element.parent()[0].getBoundingClientRect().top || fallbackHeight);
                     return $element.css('height', (parentHeight - combineHeights(siblings($element)) - additionalHeight) + "px");
                 });
                 return $timeout(function() {
